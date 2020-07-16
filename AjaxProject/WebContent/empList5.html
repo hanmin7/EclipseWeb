@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="jquery-3.5.1.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$.ajax({
+			url: "emp.xml",
+			success: function(result, status, xhr) {
+				console.log(result);
+				var datas = $(result).children().children();  //오브젝트타입으로 가져오기
+				console.log(datas.children().eq(0).text());
+				var $tag = "<table border=1><caption>:::: Employee Lists ::::</caption>";
+				$tag += "<tr><th>emp_id</th><th>emp_name</th><th>com_name</th><th>dept_name</th><th>job</th></tr>";
+				for (var i = 0; i < datas.length; i++) {
+					$tag += "<tr><td>" + $(datas[i]).children().eq(0).text()
+					     + "</td><td>" + $(datas[i]).children().eq(1).text() 
+					     + "</td><td>" + $(datas[i]).children().eq(2).text() 
+					     + "</td><td>" + $(datas[i]).children().eq(3).text()
+					     + "</td><td>" + $(datas[i]).children().eq(4).text()
+					     + "</td></tr>";
+				}
+				$tag += "</table>";
+				$("#show").html($tag);
+				
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<p id="show"></p>
+</body>
+</html>
