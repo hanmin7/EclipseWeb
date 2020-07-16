@@ -25,6 +25,26 @@ public class EmpDAO {
 	}
 	
 	
+	public void deleteEmp(String empId) {
+		conn = getConnect();
+		String sql = "delete from employees where employee_id = " + empId;
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			int r = pstmt.executeUpdate();
+			System.out.println(r + "건 삭제됨.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	
 	public Map<String, String> getJobCode() {
 		conn = getConnect();
 		Map<String, String> map = new HashMap<>();

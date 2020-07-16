@@ -36,7 +36,7 @@
 					$tag += "<tr><td>" + datas[i].id 
 					     + "</td><td>" + datas[i].first_name 
 					     + "</td><td>" + datas[i].email 
-					     + "</td><td>" + datas[i].salary
+					     + "</td><td ondblclick='changeFunc(this)'>" + datas[i].salary
 					     + "</td><td><button onclick='delFunc(this)'>Del</button>"
 					     + "</td></tr>";
 				}
@@ -50,8 +50,46 @@
 		
 	});
 	
+	
+	function valueUpdate() {
+		console.log($(this).val());
+		console.log($(this).parent().parent().children().eq(0).text());
+		var curSalary = $(this).val();
+		var curEmpId = $(this).parent().parent().children().eq(0).text();
+		$.ajax({
+			url:"UpdateEmpServlet",
+			data:{"empId": curEmpId, "salary": curSalary},
+			success: function(result, status) {
+				console.log(status);
+			}
+		});
+	}
+	
+	
+	function changeFunc(obj) {
+		//$(obj).append($('<input />').attr('value', obj.childNodes[0].nodeValue).on('change', valueUpdate));
+		var $input = $('<input />').attr('value', obj.childNodes[0].nodeValue);
+		$input.on('change', valueUpdate);
+		$(obj).append($input);
+		obj.childNodes[0].nodeValue="";
+	}
+	
+	
+	
 	function delFunc(obj) {
-		$(obj).parent().parent().remove();
+		// table > tr > td > button
+		console.log($(obj).parent().parent().children().eq(0).text());
+		var eid = $(obj).parent().parent().children().eq(0).text();
+		$(obj).parent().parent().remove();  // obj.parentNode.parentNode.remove 자바스크립트
+		$.ajax({
+			//url:"DelEmpServlet?eid="+eid,
+			url:"DelEmpServlet",
+			data: {"eid": eid, "salary": 500},    //"eid="+eid, 하나만넘길때 아니면 여러개는 괄호안에 앞에처럼 키밸류값 입력...
+			success: function(result, status) {
+				console.log(status);
+			}
+		});
+		
 	}
 	
 </script>
