@@ -29,10 +29,13 @@ public class GetEmpServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		response.setContentType("text/html;charset=utf-8");
+		String action = request.getParameter("action");
+		if(action.equals("list")) {
+		
 //		request.setCharacterEncoding("utf-8");
 //		response.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
+		
 //		response.getWriter().append("Served at: ").append(request.getContextPath()).append("han한");
 		PrintWriter out = response.getWriter();
 //		out.write("[{\"id\":\"user1\",\"first_name\":\"Hong\",\"age\":\"30\"},");
@@ -62,14 +65,19 @@ public class GetEmpServlet extends HttpServlet {
 //					+ "\"," + " \"email\":\"" + emp.getEmail()
 //					+ "\", \"salary\":\"" + emp.getSalary() +"\"}", args)
 //		}
-		
+			
+	} else if(action.equals("update")) {
+		String empId = request.getParameter("empId");
+		String salary = request.getParameter("salary");
+		EmpDAO dao = new EmpDAO();
+		dao.updateEmp(empId, salary);
+		}
 	}
                
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

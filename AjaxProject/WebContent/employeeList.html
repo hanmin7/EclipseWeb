@@ -27,6 +27,7 @@
 		$.ajax({
 			url: "GetEmpServlet",
 			dataType: "json",
+			data:{"action": "list"},
 			success: function(result, status, xhr) {
 				console.log(result)
 				var datas = result;
@@ -57,15 +58,17 @@
 		var curSalary = $(this).val();
 		var curEmpId = $(this).parent().parent().children().eq(0).text();
 		$.ajax({
-			url:"UpdateEmpServlet",
-			data:{"empId": curEmpId, "salary": curSalary},
+			//url:"UpdateEmpServlet",
+			url:"GetEmpServlet",
+			data:{"empId": curEmpId, "salary": curSalary, "action": "update"},
 			success: function(result, status) {
 				console.log(status);
 			}
 		});
+		$(this).parent().text(curSalary);
 	}
 	
-	
+	                       
 	function changeFunc(obj) {
 		//$(obj).append($('<input />').attr('value', obj.childNodes[0].nodeValue).on('change', valueUpdate));
 		var $input = $('<input />').attr('value', obj.childNodes[0].nodeValue);

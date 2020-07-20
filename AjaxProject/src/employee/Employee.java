@@ -24,6 +24,9 @@ public class Employee {
 		this.email = email;
 		this.salary = salary;
 	}
+	public Employee() {
+		
+	}
 	public int getEmployeeId() {
 		return employeeId;
 	}
